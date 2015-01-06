@@ -1,9 +1,38 @@
 {% extends "base.html" %}
 
 {% block content %}
+
+    <form id="search_form" action='/_search/' method='get'>
+        <input id="tags" type="text" name='tags' />
+        <input type="submit" value="Search" />
+    </form>
+
+    <div id="entry-box">
     {% for entry in feed.entries %}
-        <div style="margin:10px auto; display: block;">
-        {{ entry.content.0.value|safe }}
-        </div>
+        {% include "entry.html" %}
     {% endfor %}
+    </div>
+{% endblock %}
+
+{% block extrafoot %}
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#search_form").on('submit', function(e) {
+            e.preventDefault();
+            var tags = $("#tags").val();
+
+            $.ajax({
+                url: '/_search/',
+                type: "GET",
+                dataType: "json",
+                data: {'tags': tags},
+                success: function(data) {
+                    alert("sucess");
+                    $("#entry-box").html(data.contents);
+                }
+            });
+        });
+    });
+</script>
+
 {% endblock %}
