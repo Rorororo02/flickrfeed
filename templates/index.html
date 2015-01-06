@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% for entry in feed.entries %}
+        <div style="margin:10px auto; display: block;">
+        {{ entry.content.0.value|safe }}
+        </div>
+    {% endfor %}
+{% endblock %}
