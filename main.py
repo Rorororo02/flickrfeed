@@ -8,6 +8,7 @@ def index():
     feed = feedparse('https://api.flickr.com/services/feeds/photos_public.gne')
     return render_template('index.html', feed=feed)
 
+
 @app.route('/_search/')
 def search():
     tags = request.args.get('tags', '')
@@ -24,4 +25,4 @@ def search():
 
 if __name__ == '__main__':
     app.debug = True
-    app.run(host='0.0.0.0')
+    app.run()
