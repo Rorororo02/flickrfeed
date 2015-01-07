@@ -17,12 +17,9 @@ def search():
     if not request.is_xhr:
         return render_template('index.html', feed=feed)
 
-    contents = []
-    for entry in feed.entries:
-        rendered = render_template("entry.html", entry=entry)
-        contents.append(rendered)
+    rendered = render_template("entries.html", feed=feed)
 
-    return jsonify({'contents': " ".join(contents)})
+    return jsonify({'contents': rendered })
 
 
 if __name__ == '__main__':

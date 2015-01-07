@@ -1,0 +1,6 @@
+{% for entry in feed.entries %}
+<div class="img-entry">
+    {{ entry.content.0.value|safe }}
+    <div class="fb-like" data-href="{{ entry.link }}" data-layout="standard" data-action="like" data-show-faces="false" data-share="false"></div>
+</div>
+{% endfor %}

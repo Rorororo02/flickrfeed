@@ -1,24 +1,27 @@
 {% extends "base.html" %}
 
 {% block content %}
-
+    <div class="loading">Loading&#8230;</div>
     <form id="search_form" action='/_search/' method='get'>
         <input id="tags" type="text" name='tags' />
         <input type="submit" value="Search" />
     </form>
 
-    <div id="entry-box">
-    {% for entry in feed.entries %}
-        {% include "entry.html" %}
-    {% endfor %}
+    <div id="entry-box" class="clearfix">
+        {% include "entries.html" %}
     </div>
 {% endblock %}
 
 {% block extrafoot %}
 <script type="text/javascript">
+    $(window).load(function() {
+        $(".loading").hide();
+    });
+
     $(document).ready(function() {
         $("#search_form").on('submit', function(e) {
             e.preventDefault();
+            $(".loading").show();
             var tags = $("#tags").val();
 
             $.ajax({
@@ -27,8 +30,8 @@
                 dataType: "json",
                 data: {'tags': tags},
                 success: function(data) {
-                    alert("sucess");
                     $("#entry-box").html(data.contents);
+                    $(".loading").hide();
                 }
             });
         });
